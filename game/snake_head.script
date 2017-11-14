@@ -120,15 +120,57 @@ function on_message(self, message_id, message, sender)
 	
 end
 
-function on_input(self, action_id, action)
+local function moveByKeyBoard(self, action_id, action)
+
 	if action_id == hash("key_left") and self.moveDirection ~= "right" then
 		self.moveDirection = "left"
-	elseif action_id == hash("key_right") and self.moveDirection ~= "left"  then
+	elseif action_id == hash("key_right") and self.moveDirection ~= "left" then
 		self.moveDirection = "right"
-	elseif action_id == hash("key_up") and self.moveDirection ~= "down"  then
+	elseif action_id == hash("key_up") and self.moveDirection ~= "down" then
 		self.moveDirection = "up"
 	elseif action_id == hash("key_down") and self.moveDirection ~= "up" then
 		self.moveDirection = "down"
 	end
+
+end
+
+local function touchDown(pos)
+	return pos.y < tonumber(sys.get_config("display.height")) / 2
+end
+
+local function touchRight(pos)
+	return pos.x > tonumber(sys.get_config("display.width")) / 2
+end
+
+
+local function moveByTouch(self, action_id, action)
+	
+	if action_id == hash("touch") and action.pressed then
+	
+		local nextMoveDirection = self.moveDirection
+		
+		if self.moveDirection == "right" then
+			nextMoveDirection = "down"
+		elseif self.moveDirection == "down"then
+			nextMoveDirection = "left"
+		elseif self.moveDirection == "left"then
+			nextMoveDirection = "up"
+		elseif self.moveDirection == "up"then
+			nextMoveDirection = "right"
+		end
+		
+		self.moveDirection = nextMoveDirection
+	
+	end
+
+end
+
+ 
+
+
+function on_input(self, action_id, action)
+
+	moveByKeyBoard(self, action_id, action)
+	moveByTouch(self, action_id, action)
 		
 end
