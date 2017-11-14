@@ -1,0 +1,24 @@
+[project]
+title = Snake
+version = 0.1
+
+[bootstrap]
+main_collection = /main/main.collectionc
+
+[input]
+game_binding = /input/game.input_bindingc
+use_accelerometer = 0
+
+[display]
+width = 480
+height = 480
+
+[physics]
+scale = 0.02
+
+[script]
+shared_state = 1
+
+[tracking]
+app_id = A6731AF725BE354C
+

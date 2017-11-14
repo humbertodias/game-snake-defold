@@ -1,0 +1,134 @@
+local function timer(self, dt)
+	self.timer = self.timer + dt
+	
+	if self.timer > 0.1 then
+		self.timer = 0
+		return true
+	end
+	
+end
+
+local function resetGame(self)
+
+	for k,v in pairs(self.body) do
+		go.delete(v)
+		self.body[k] = nil
+	end
+	
+	for k,v in pairs(self.path) do
+		self.path[k] = nil
+	end
+	
+	go.set_position(vmath.vector3(240,240,0.2))
+end
+
+
+local function moveHead(self, dt)
+	local pos = go.get_position()
+	
+	if self.moveDirection == "left" then
+		pos.x = pos.x - self.size
+	elseif self.moveDirection == "right" then
+		pos.x = pos.x + self.size
+	elseif self.moveDirection == "up" then
+		pos.y = pos.y + self.size
+	elseif self.moveDirection == "down" then
+		pos.y = pos.y - self.size
+	end
+	
+	table.insert(self.path, 1, pos)	
+	-- TODO performance
+	
+	go.set_position(pos)
+end
+
+
+local function addBody(self)
+	if #self.path == 0 then
+		local pos = go.get_position()
+		self.body[#self.body+1] = factory.create("#body_factory", pos)
+	else
+		local pos = go.get_position(self.body[#self.body])
+		self.body[#self.body+1] = factory.create("#body_factory", pos)
+	end
+	label.set_text("bg#label", #self.body)
+end
+
+local function moveBody(self, dt)
+	for i, bodyPart in ipairs(self.body) do
+		if #self.path >= i + 1 then
+			pos = self.path[i+1]
+			go.set_position(pos, bodyPart)
+		end
+	end
+	
+end
+
+
+local function addFood (pos)
+	factory.create("#food_factory", pos)
+end
+
+local function spawnNewFood(self)
+	local x = math.random(29)
+	local y = math.random(29)
+	addFood(vmath.vector3(x*self.size, y*self.size, 0.2))
+end
+
+local function checkBorder(self)
+	local pos = go.get_position()
+	if pos.x > 464 or pos.x < 0 or pos.y > 464 or pos.y < 0 then
+		resetGame(self)	
+	end
+end
+
+
+
+function init(self)
+	msg.post(".","acquire_input_focus")
+	self.size = 16
+	self.moveDirection = "right"
+	self.timer = 0
+	self.body = {}
+	self.path = {}
+	
+	spawnNewFood(self)
+end
+
+
+function update(self, dt)
+	if timer (self, dt) then
+		moveHead(self, dt)	
+		moveBody(self, dt)
+	end 
+	checkBorder(self)
+	
+end
+
+function on_message(self, message_id, message, sender)
+	if message_id == hash("contact_point_response") then
+		if message.group == hash("food") then
+			go.delete(message.other_id)
+			spawnNewFood(self)
+			addBody(self)
+		end
+		if message.group == hash("body") and #self.body >= 4 then
+			resetGame(self)
+		end
+		
+	end
+	
+end
+
+function on_input(self, action_id, action)
+	if action_id == hash("key_left") and self.moveDirection ~= "right" then
+		self.moveDirection = "left"
+	elseif action_id == hash("key_right") and self.moveDirection ~= "left"  then
+		self.moveDirection = "right"
+	elseif action_id == hash("key_up") and self.moveDirection ~= "down"  then
+		self.moveDirection = "up"
+	elseif action_id == hash("key_down") and self.moveDirection ~= "up" then
+		self.moveDirection = "down"
+	end
+		
+end

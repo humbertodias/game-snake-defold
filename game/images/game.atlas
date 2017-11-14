@@ -1,0 +1,12 @@
+images {
+  image: "/game/images/bg.png"
+}
+images {
+  image: "/game/images/food.png"
+}
+images {
+  image: "/game/images/snake.png"
+}
+margin: 0
+extrude_borders: 0
+inner_padding: 0
