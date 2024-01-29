@@ -5,7 +5,7 @@ Snake game created with Defold engine created by King.com
 
 # Dependencies
 
-1. [Defold](https://www.defold.com/editor-two)
+1. [Defold](https://defold.com/download/)
 
 # How to run
 
