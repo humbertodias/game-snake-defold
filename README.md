@@ -10,6 +10,12 @@ Snake game created with Defold engine created by King.com
 
 # How to run
 
+Access https://humbertodias.github.io/game-snake-defold/
+
+or 
+
+Locally
+
 ```shell
 git clone https://github.com/humbertodias/game-snake-defold
 ```
