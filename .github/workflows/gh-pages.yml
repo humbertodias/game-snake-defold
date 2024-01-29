@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Bob Build
-        run: docker run -i -v `pwd`:/tmp/workdir -w /tmp/workdir gmantaos/defold "bob --platform js-web --architectures wasm-web --variant=debug resolve distclean build bundle --archive"
+        run: docker run -i -v `pwd`:/tmp/workdir -w /tmp/workdir gmantaos/defold bash -c "bob --platform js-web --architectures wasm-web --variant=debug resolve distclean build bundle --archive"
 
       - name: Setup Pages
         uses: actions/configure-pages@v3
