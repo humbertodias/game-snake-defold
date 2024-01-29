@@ -1,7 +1,8 @@
+[![Deploy static content to Pages](https://github.com/humbertodias/game-snake-defold/actions/workflows/gh-pages.yml/badge.svg)](https://github.com/humbertodias/game-snake-defold/actions/workflows/gh-pages.yml)
+
 # Snake Game
 
 Snake game created with Defold engine created by King.com
-
 
 # Dependencies
 
@@ -9,7 +10,7 @@ Snake game created with Defold engine created by King.com
 
 # How to run
 
-```
+```shell
 git clone https://github.com/humbertodias/game-snake-defold
 ```
 
@@ -19,14 +20,11 @@ Click on **From disk** and select the file **game.project**
 
 ![](doc/defold-open.png)
 
-
-
 # Output
 
 Project > Build
 
 ![](doc/snake-running.png)
-
 
 # References
 
