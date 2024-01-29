@@ -68,6 +68,7 @@ embedded_components {
   "linear_damping: 0.0\n"
   "angular_damping: 0.0\n"
   "locked_rotation: false\n"
+  "bullet: false\n"
   ""
   position {
     x: 0.0
@@ -86,6 +87,7 @@ embedded_components {
   type: "factory"
   data: "prototype: \"/game/snake_body.go\"\n"
   "load_dynamically: false\n"
+  "dynamic_prototype: false\n"
   ""
   position {
     x: 0.0
@@ -104,6 +106,7 @@ embedded_components {
   type: "factory"
   data: "prototype: \"/game/food.go\"\n"
   "load_dynamically: false\n"
+  "dynamic_prototype: false\n"
   ""
   position {
     x: 0.0
